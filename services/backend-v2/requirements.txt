@@ -9,3 +9,4 @@ pony==0.7.17
 uvicorn==0.24.0
 psycopg2==2.9.9
 requests==2.31.0
+python-multipart==0.0.6

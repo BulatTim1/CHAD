@@ -1,13 +1,25 @@
-FROM node:latest as buildstage
+FROM node:latest
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 COPY package*.json ./
 RUN npm install
 COPY ./ .
-RUN mkdir /dist
-RUN npm run buildonly
+RUN npm run build
+CMD ["npm", "run", "preview"]
 
-FROM nginx
-RUN mkdir /dist
-COPY from=buildstage /dist/ /dist/
-COPY nginx.conf /etc/nginx/nginx.conf
+# FROM nginx
+# RUN mkdir /dist
+# COPY from=0 dist/ /dist/
+# COPY test-nginx.conf /etc/nginx/nginx.conf
+
+
+# FROM nginx
+# RUN mkdir /app
+# WORKDIR /app
+# ENV PATH /usr/src/app/node_modules/.bin:$PATH
+# COPY ./ .
+# COPY test-nginx.conf /etc/nginx/nginx.conf
+
+
+# RUN npm install
+# CMD ["npm", "run", "dev"]

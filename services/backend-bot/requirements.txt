@@ -1,0 +1,5 @@
+pony==0.7.17
+psycopg2==2.9.9
+requests==2.31.0
+pydantic==2.5.0
+python-telegram-bot==20.6

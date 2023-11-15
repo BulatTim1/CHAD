@@ -1,24 +1,34 @@
+from enum import Enum
 import time
-from typing import List, Optional, Union
-from pydantic import BaseModel, Field
-from pony.orm import PrimaryKey, Required
-
+from pydantic import BaseModel
+from pony.orm import PrimaryKey, Required, Set
 from src.models import db
 
-# test_json = {
-#     "id": 485498234,
-#     "first_name": "Булат",
-#     "username": "BulatTim",
-#     "photo_url": "https://t.me/i/userpic/320/unKzZW_RKjaEedTEwiOuGMeEe3OmS30ciYxrBzPz7MI.jpg",
-#     "auth_date": 1699270274,
-#     "hash": "d80819f49422783911b29b13da1e9c231ca04216ba093878148e1e40621a2e3b"
-# }
+class MediaTypes(str, Enum):
+    photo = "photo"
+    video = "video"
+
+class MediaView(BaseModel):
+    id: int|None = None
+    file: str
+    type: MediaTypes
+
+class Media(db.Entity):
+    id = PrimaryKey(int, size=64, auto=True)
+    file = Required(bytes)
+    type = Required(MediaTypes)
+    post = Required("Post")
+
+    def toModel(self):
+        model = MediaView(id=self.id, file=self.file.decode(), type=self.type)
+        return model
 
 class PostView(BaseModel):
-    id: Union[int, None] = None
+    id: int|None = None
     text: str
     send_time: int = int(time.time()) + 30
-    # media: List[bytes]
+    media: list[MediaView]|None = None
+    channel: int|None = None
 
 
 class Post(db.Entity):
@@ -26,6 +36,10 @@ class Post(db.Entity):
     text = Required(str)
     send_time = Required(int, size=64)
     channel = Required("Channel")
+    media = Set("Media")
     
     def toModel(self):
-        return PostView(id=self.id, text=self.text, send_time=self.send_time)
+        model = PostView(id=self.id, text=self.text, send_time=self.send_time, channel=self.channel.id, media=[])
+        if len(self.media) > 0:
+            model.media = [i.toModel() for i in self.media]
+        return model

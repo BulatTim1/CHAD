@@ -8,10 +8,10 @@ export const fetchWrapper = {
 };
 
 function request(method) {
-    return (url, body) => {
+    return (url, token, body) => {
         const requestOptions = {
             method,
-            headers: authHeader(url)
+            headers: authHeader(url, token)
         };
         if (body) {
             requestOptions.headers['Content-Type'] = 'application/json';
@@ -23,13 +23,13 @@ function request(method) {
 
 // helper functions
 
-function authHeader(url) {
+function authHeader(url, token) {
     // return auth header with jwt if user is logged in and request is to the api url
-    const { user } = useAuthStore();
-    const isLoggedIn = !!user?.token;
+    // const { user } = useAuthStore();
+    // const isLoggedIn = !!user?.token;
     const isApiUrl = url.startsWith(import.meta.env.VITE_API_URL);
-    if (isLoggedIn && isApiUrl) {
-        return { Authorization: `Bearer ${user.token}` };
+    if (isApiUrl) {
+        return { "telegram-token": `${token}` };
     } else {
         return {};
     }

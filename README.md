@@ -1,21 +1,16 @@
-# Developing a Single Page App with FastAPI and Vue.js
+# CHannel ADministrator
 
-### Want to learn how to build this?
+## Stack:
+* backend: fastapi + ponyORM
+* frontend: vue3 + vite
+* db: postgres
+* bot: python-telegram-bot
 
-Check out the [post](https://testdriven.io/blog/developing-a-single-page-app-with-fastapi-and-vuejs).
+## Run:
+> configure envs
+> docker compose up
+>
+> maybe need to edit pg_hba.conf for remote connection from another containers to db
 
-## Want to use this project?
 
-Build the images and spin up the containers:
-
-```sh
-$ docker-compose up -d --build
-```
-
-Apply the migrations:
-
-```sh
-$ docker-compose exec backend aerich upgrade
-```
-
-Ensure [http://localhost:5000](http://localhost:5000), [http://localhost:5000/docs](http://localhost:5000/docs), and [http://localhost:8080](http://localhost:8080) work as expected.
+@2023 BulatTim

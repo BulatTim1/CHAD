@@ -1,14 +1,19 @@
 {
-    "name": "vue-3-pinia-registration-login-example",
+    "name": "chad",
     "version": "0.0.0",
     "scripts": {
-        "dev": "vite --host -d",
+        "dev": "vite --host",
         "build": "vite build",
-        "preview": "vite preview --port 5050",
+        "preview": "vite preview --port 80",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
     },
     "dependencies": {
+        "buffer": "^6.0.3",
+        "dateformat": "^5.0.3",
         "pinia": "^2.0.13",
+        "qalendar": "^3.5.0",
+        "sanitize-html": "^2.11.0",
+        "sass": "^1.69.5",
         "vee-validate": "^4.5.11",
         "vue": "^3.2.33",
         "vue-router": "^4.0.14",

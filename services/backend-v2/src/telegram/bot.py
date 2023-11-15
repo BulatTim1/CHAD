@@ -1,4 +1,4 @@
-from src.config import TELEGRAM_TOKEN
+from src.config import TELEGRAM_TOKEN, TELEGRAM_BOT_ID
 import requests
 
 base_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN.decode()}"
@@ -28,3 +28,17 @@ def getNewChannels(userId, channelsIds=[]):
         return {}
     except:
         return {}
+
+def getChatAdmins(channelId):
+    try:
+        resp = requests.get(
+            f"{base_url}/getChatAdministrators", json={"chat_id": channelId}
+        ).json()
+        admins = []
+        if resp["ok"] == True:
+            for res in resp["result"]:
+                if res["user"]["is_bot"] != True:
+                    admins.append(res["user"]["id"])
+        return admins
+    except:
+        return []
